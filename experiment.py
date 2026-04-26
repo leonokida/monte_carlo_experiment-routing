@@ -32,7 +32,7 @@ def create_experiment_setup(graph: nx.Graph):
             for neighbor in graph.neighbors(origin):
                 if nx.has_path(setup[origin]["g_prime"], neighbor, destination) and neighbor != destination:
                     neighbors.append(neighbor)
-            setup[origin]["neighbors_" + destination] = neighbors
+            setup[origin][destination] = neighbors
     
     return setup
 
@@ -44,7 +44,7 @@ def create_experiment_results_object(setup: dict):
         results[origin] = dict()
         for destination in setup[origin]["destinations"]:
             results[origin][destination] = dict()
-            for neighbor in setup[origin]["neighbors_" + destination]:
+            for neighbor in setup[origin][destination]:
                 results[origin][destination][neighbor] = 0
 
     return results
@@ -73,7 +73,7 @@ def experiment(graph: nx.Graph, p: float, epochs: int, experiment_name: str):
         for origin in graph.nodes():
             experiment_graph = generate_failures_graph(setup[origin]["g_prime"], p)
             for destination in setup[origin]["destinations"]:
-                for neighbor in setup[origin]["neighbors_" + destination]:
+                for neighbor in setup[origin][destination]:
                     if nx.has_path(experiment_graph, neighbor, destination):
                         results[origin][destination][neighbor] += 1
 
@@ -86,8 +86,8 @@ if __name__ == "__main__":
 
     experiments = [
         (nx.read_edgelist("topologies/rnp.txt"), "rnp_topology"),
-        (nx.read_edgelist("topologies/chinanet.txt", "chinanet_topology")),
-        (nx.read_edgelist("topologies/internet2.txt", "internet2_topology")),
+        (nx.read_edgelist("topologies/chinanet.txt"), "chinanet_topology"),
+        (nx.read_edgelist("topologies/internet2.txt"), "internet2_topology"),
         (nx.read_edgelist("topologies/geant.txt"), "geant_topology"),
         (random_graph(50, 0.3), "random_graph_50_03"),
         (random_graph(100, 0.3), "random_graph_100_03"),
