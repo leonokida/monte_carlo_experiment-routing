@@ -51,7 +51,7 @@ def create_experiment_results_object(setup: dict):
 
 def save_to_csv(results: dict, epochs: int, name: str):
     filename = name + ".csv"
-    with open(filename, "w") as f:
+    with open("results/" + filename, "w") as f:
         print("Origin,Destination,Neighbor,Result", file=f)
         for origin in results.keys():
             for destination in results[origin].keys():
@@ -78,7 +78,7 @@ def experiment(graph: nx.Graph, p: float, epochs: int, experiment_name: str):
                         results[origin][destination][neighbor] += 1
 
     save_to_csv(results, epochs, experiment_name)
-    print(f"Saved results in {experiment_name}.csv")
+    print(f"Saved results in results/{experiment_name}.csv")
 
 if __name__ == "__main__":
     P = 0.1
