@@ -82,7 +82,7 @@ def experiment(graph: nx.Graph, p: float, epochs: int, experiment_name: str):
 
 if __name__ == "__main__":
     P = 0.1
-    EPOCHS = 1000
+    EPOCHS = 10000
 
     experiments = [
         (remove_low_connectivity_vertices(nx.read_edgelist("topologies/rnp.txt")), "rnp_topology"),
