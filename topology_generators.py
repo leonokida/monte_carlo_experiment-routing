@@ -19,3 +19,16 @@ def preferential_attachment_graph(size: int) -> nx.Graph:
     # m=3 (number of edges to attach from a new node to existing nodes)
     graph = nx.barabasi_albert_graph(size, 3)
     return graph
+
+def remove_low_connectivity_vertices(graph: nx.Graph) -> nx.Graph:
+    # Removes vertices that possess connectivity equal to 1
+    to_remove = []
+    
+    for vertex in list(graph.nodes):
+        if graph.degree(vertex) <= 1:
+            to_remove.append(vertex)
+    
+    for vertex in to_remove:
+        graph.remove_node(vertex)
+
+    return graph

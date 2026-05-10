@@ -1,6 +1,6 @@
 import networkx as nx
 import random
-from topology_generators import random_graph, small_world_graph, preferential_attachment_graph
+from topology_generators import random_graph, small_world_graph, preferential_attachment_graph, remove_low_connectivity_vertices
 
 def generate_failures_graph(graph: nx.Graph, p: float):
     """ Adds failures with probability p to edges of a graph """
@@ -85,25 +85,25 @@ if __name__ == "__main__":
     EPOCHS = 1000
 
     experiments = [
-        (nx.read_edgelist("topologies/rnp.txt"), "rnp_topology"),
-        (nx.read_edgelist("topologies/chinanet.txt"), "chinanet_topology"),
-        (nx.read_edgelist("topologies/internet2.txt"), "internet2_topology"),
-        (nx.read_edgelist("topologies/geant.txt"), "geant_topology"),
-        (random_graph(50, 0.3), "random_graph_50_03"),
-        (random_graph(100, 0.3), "random_graph_100_03"),
-        (random_graph(150, 0.3), "random_graph_150_03"),
-        (random_graph(50, 0.5), "random_graph_50_05"),
-        (random_graph(100, 0.5), "random_graph_100_05"),
-        (random_graph(150, 0.5), "random_graph_150_05"),
-        (random_graph(50, 0.3), "random_graph_50_07"),
-        (random_graph(100, 0.7), "random_graph_100_07"),
-        (random_graph(150, 0.7), "random_graph_150_07"),
-        (small_world_graph(50), "small_world_50"),
-        (small_world_graph(100), "small_world_100"),
-        (small_world_graph(150), "small_world_150"),
-        (preferential_attachment_graph(50), "preferential_attachment_50"),
-        (preferential_attachment_graph(100), "preferential_attachment_100"),
-        (preferential_attachment_graph(150), "preferential_attachment_150")
+        (remove_low_connectivity_vertices(nx.read_edgelist("topologies/rnp.txt")), "rnp_topology"),
+        (remove_low_connectivity_vertices(nx.read_edgelist("topologies/chinanet.txt")), "chinanet_topology"),
+        (remove_low_connectivity_vertices(nx.read_edgelist("topologies/internet2.txt")), "internet2_topology"),
+        (remove_low_connectivity_vertices(nx.read_edgelist("topologies/geant.txt")), "geant_topology"),
+        (remove_low_connectivity_vertices(random_graph(80, 0.1)), "random_graph_80_01"),
+        (remove_low_connectivity_vertices(random_graph(100, 0.1)), "random_graph_100_01"),
+        (remove_low_connectivity_vertices(random_graph(120, 0.1)), "random_graph_120_01"),
+        (remove_low_connectivity_vertices(random_graph(80, 0.2)), "random_graph_80_02"),
+        (remove_low_connectivity_vertices(random_graph(100, 0.2)), "random_graph_100_02"),
+        (remove_low_connectivity_vertices(random_graph(120, 0.2)), "random_graph_120_02"),
+        (remove_low_connectivity_vertices(random_graph(80, 0.3)), "random_graph_80_03"),
+        (remove_low_connectivity_vertices(random_graph(100, 0.3)), "random_graph_100_03"),
+        (remove_low_connectivity_vertices(random_graph(120, 0.3)), "random_graph_120_03"),
+        (remove_low_connectivity_vertices(small_world_graph(80)), "small_world_80"),
+        (remove_low_connectivity_vertices(small_world_graph(100)), "small_world_100"),
+        (remove_low_connectivity_vertices(small_world_graph(120)), "small_world_120"),
+        (remove_low_connectivity_vertices(preferential_attachment_graph(80)), "preferential_attachment_80"),
+        (remove_low_connectivity_vertices(preferential_attachment_graph(100)), "preferential_attachment_100"),
+        (remove_low_connectivity_vertices(preferential_attachment_graph(120)), "preferential_attachment_120")
     ]
 
     for graph, name in experiments:
